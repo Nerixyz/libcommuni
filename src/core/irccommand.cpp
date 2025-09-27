@@ -32,7 +32,6 @@
 #include "ircmessage.h"
 #include "ircconnection_p.h"
 #include "irccore_p.h"
-#include <QTextCodec>
 #include <QMetaEnum>
 #include <QDebug>
 
@@ -262,12 +261,8 @@ IRC_BEGIN_NAMESPACE
     \brief A whowas command (WHOWAS) is used to query information about a user that no longer exists.
  */
 
-extern bool irc_is_supported_encoding(const QByteArray& encoding); // ircmessagedecoder.cpp
-
 #ifndef IRC_DOXYGEN
-IrcCommandPrivate::IrcCommandPrivate() :  encoding("UTF-8")
-{
-}
+IrcCommandPrivate::IrcCommandPrivate() = default;
 
 QString IrcCommandPrivate::params(int index) const
 {
@@ -366,35 +361,6 @@ void IrcCommand::setParameters(const QStringList& parameters)
 {
     Q_D(IrcCommand);
     d->parameters = parameters;
-}
-
-/*!
-    This property holds the encoding that is used when
-    sending the command via IrcConnection::sendCommand().
-
-    See QTextCodec::availableCodes() for the list of
-    supported encodings. The default value is \c "UTF-8".
-
-    \par Access functions:
-    \li QByteArray <b>encoding</b>() const
-    \li void <b>setEncoding</b>(const QByteArray& encoding)
-
-    \sa QTextCodec::availableCodecs()
- */
-QByteArray IrcCommand::encoding() const
-{
-    Q_D(const IrcCommand);
-    return d->encoding;
-}
-
-void IrcCommand::setEncoding(const QByteArray& encoding)
-{
-    Q_D(IrcCommand);
-    if (!irc_is_supported_encoding(encoding)) {
-        qWarning() << "IrcCommand::setEncoding(): unsupported encoding" << encoding;
-        return;
-    }
-    d->encoding = encoding;
 }
 
 /*!

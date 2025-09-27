@@ -134,8 +134,6 @@ void IrcProtocolPrivate::processLine(const QByteArray& line)
 
     IrcMessage* msg = IrcMessage::fromData(line, connection);
     if (msg) {
-        msg->setEncoding(connection->encoding());
-
         if (!msg->tag("batch").isNull() && batchMessage(msg))
             return;
 

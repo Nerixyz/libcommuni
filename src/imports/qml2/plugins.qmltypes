@@ -877,7 +877,6 @@ Module {
         Property { name: "connection"; type: "IrcConnection"; isReadonly: true; isPointer: true }
         Property { name: "network"; type: "IrcNetwork"; isReadonly: true; isPointer: true }
         Property { name: "parameters"; type: "QStringList" }
-        Property { name: "encoding"; type: "QByteArray" }
         Property { name: "type"; type: "Type" }
         Method {
             name: "toMessage"
@@ -1377,7 +1376,6 @@ Module {
         Property { name: "nickNames"; type: "QStringList" }
         Property { name: "displayName"; type: "string" }
         Property { name: "userData"; type: "QVariantMap" }
-        Property { name: "encoding"; type: "QByteArray" }
         Property { name: "status"; type: "Status"; isReadonly: true }
         Property { name: "active"; type: "bool"; isReadonly: true }
         Property { name: "connected"; type: "bool"; isReadonly: true }

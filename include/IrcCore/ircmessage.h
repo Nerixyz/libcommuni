@@ -144,9 +144,6 @@ public:
     QDateTime timeStamp() const;
     void setTimeStamp(const QDateTime& timeStamp);
 
-    QByteArray encoding() const;
-    void setEncoding(const QByteArray& encoding);
-
     QVariantMap tags() const;
     void setTags(const QVariantMap& tags);
 

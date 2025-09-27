@@ -44,7 +44,6 @@ public:
 
     IrcCommand::Type type = IrcCommand::Custom;
     QStringList parameters;
-    QByteArray encoding;
     QPointer<IrcConnection> connection;
 
     static IrcCommandPrivate* get(const IrcCommand* command)

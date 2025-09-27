@@ -106,13 +106,11 @@ public:
 
     void invalidate();
 
-    static QString decode(const QByteArray& data, const QByteArray& encoding);
     static bool parsePrefix(const QString& prefix, QString* nick, QString* ident, QString* host);
 
     IrcConnection* connection = nullptr;
     IrcMessage::Type type = IrcMessage::Unknown;
     QDateTime timeStamp;
-    QByteArray encoding;
     mutable int flags = -1;
     IrcMessageData data;
     QList<IrcMessage*> batch;

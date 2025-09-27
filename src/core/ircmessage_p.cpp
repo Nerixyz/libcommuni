@@ -27,13 +27,12 @@
 */
 
 #include "ircmessage_p.h"
-#include "ircmessagedecoder_p.h"
 
 IRC_BEGIN_NAMESPACE
 
 #ifndef IRC_DOXYGEN
 IrcMessagePrivate::IrcMessagePrivate() :
-     timeStamp(QDateTime::currentDateTime()), encoding("ISO-8859-15")
+     timeStamp(QDateTime::currentDateTime())
 {
 }
 
@@ -42,7 +41,7 @@ QString IrcMessagePrivate::prefix() const
     if (!m_prefix.isExplicit() && m_prefix.isNull() && !data.prefix.isNull()) {
         if (data.prefix.startsWith(':')) {
             if (data.prefix.length() > 1)
-                m_prefix = decode(data.prefix.mid(1), encoding);
+                m_prefix = QString::fromUtf8(QByteArrayView(data.prefix).mid(1));
         } else {
             // empty (not null)
             m_prefix = QString("");
@@ -83,7 +82,7 @@ QString IrcMessagePrivate::host() const
 QString IrcMessagePrivate::command() const
 {
     if (!m_command.isExplicit() && m_command.isNull() && !data.command.isNull())
-        m_command = decode(data.command, encoding);
+        m_command = QString::fromUtf8(data.command);
     return m_command.value();
 }
 
@@ -97,7 +96,7 @@ QStringList IrcMessagePrivate::params() const
     if (!m_params.isExplicit() && m_params.isNull() && !data.params.isEmpty()) {
         QStringList params;
         foreach (const QByteArray& param, data.params)
-            params += decode(param, encoding);
+            params += QString::fromUtf8(param);
         m_params = params;
     }
     return m_params.value();
@@ -119,7 +118,7 @@ QVariantMap IrcMessagePrivate::tags() const
         QVariantMap tags;
         QMap<QByteArray, QByteArray>::const_iterator it;
         for (it = data.tags.constBegin(); it != data.tags.constEnd(); ++it)
-            tags.insert(decode(it.key(), encoding), decode(it.value(), encoding));
+            tags.insert(QString::fromUtf8(it.key()), QString::fromUtf8(it.value()));
         m_tags = tags;
     }
     return m_tags.value();
@@ -243,13 +242,6 @@ IrcMessageData IrcMessageData::fromData(const QByteArray& data)
     }
 
     return message;
-}
-
-QString IrcMessagePrivate::decode(const QByteArray& data, const QByteArray& encoding)
-{
-    // TODO: not thread safe
-    static IrcMessageDecoder decoder;
-    return decoder.decode(data, encoding);
 }
 
 bool IrcMessagePrivate::parsePrefix(const QString& prefix, QString* nick, QString* ident, QString* host)

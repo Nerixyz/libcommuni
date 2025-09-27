@@ -42,7 +42,6 @@
 #include <QRegularExpression>
 #include <QDateTime>
 #include <QTcpSocket>
-#include <QTextCodec>
 #include <QMetaObject>
 #include <QMetaMethod>
 #include <QMetaEnum>
@@ -247,17 +246,8 @@ IRC_BEGIN_NAMESPACE
     \li void <b>whoReplyMessageReceived</b>(\ref IrcWhoReplyMessage* message) (\b since 3.1)
  */
 
-extern bool irc_is_supported_encoding(const QByteArray& encoding); // ircmessagedecoder.cpp
-
 #ifndef IRC_DOXYGEN
-IrcConnectionPrivate::IrcConnectionPrivate() :
-    encoding("ISO-8859-15"),
-    host(),
-    userName(),
-    nickName(),
-    realName()
-{
-}
+IrcConnectionPrivate::IrcConnectionPrivate() = default;
 
 void IrcConnectionPrivate::init(IrcConnection* connection)
 {
@@ -632,44 +622,11 @@ IrcConnection* IrcConnection::clone(QObject *parent) const
     connection->setNickNames(nickNames());
     connection->setDisplayName(displayName());
     connection->setUserData(userData());
-    connection->setEncoding(encoding());
     connection->setEnabled(isEnabled());
     connection->setReconnectDelay(reconnectDelay());
     connection->setSecure(isSecure());
     connection->setSaslMechanism(saslMechanism());
     return connection;
-}
-
-/*!
-    This property holds the FALLBACK encoding for received messages.
-
-    The fallback encoding is used when the message is detected not
-    to be valid \c UTF-8 and the consequent auto-detection of message
-    encoding fails. See QTextCodec::availableCodecs() for the list of
-    supported encodings.
-
-    The default value is \c ISO-8859-15.
-
-    \par Access functions:
-    \li QByteArray <b>encoding</b>() const
-    \li void <b>setEncoding</b>(const QByteArray& encoding)
-
-    \sa QTextCodec::availableCodecs(), QTextCodec::codecForLocale()
- */
-QByteArray IrcConnection::encoding() const
-{
-    Q_D(const IrcConnection);
-    return d->encoding;
-}
-
-void IrcConnection::setEncoding(const QByteArray& encoding)
-{
-    Q_D(IrcConnection);
-    if (!irc_is_supported_encoding(encoding)) {
-        qWarning() << "IrcConnection::setEncoding(): unsupported encoding" << encoding;
-        return;
-    }
-    d->encoding = encoding;
 }
 
 /*!
@@ -1462,9 +1419,7 @@ bool IrcConnection::sendCommand(IrcCommand* command)
         if (filtered) {
             res = false;
         } else {
-            QTextCodec* codec = QTextCodec::codecForName(command->encoding());
-            Q_ASSERT(codec);
-            res = sendData(codec->fromUnicode(command->toString()));
+            res = sendData(command->toString().toUtf8());
         }
         if (!command->parent())
             command->deleteLater();
@@ -1617,7 +1572,6 @@ QByteArray IrcConnection::saveState(int version) const
     args.insert("nickNames", d->nickNames);
     args.insert("displayName", displayName());
     args.insert("userData", d->userData);
-    args.insert("encoding", d->encoding);
     args.insert("enabled", d->enabled);
     args.insert("reconnectDelay", reconnectDelay());
     args.insert("secure", isSecure());
@@ -1662,7 +1616,6 @@ bool IrcConnection::restoreState(const QByteArray& state, int version)
         setNickName(d->nickNames.first());
     setDisplayName(args.value("displayName").toString());
     setUserData(args.value("userData", d->userData).toMap());
-    setEncoding(args.value("encoding", d->encoding).toByteArray());
     setEnabled(args.value("enabled", d->enabled).toBool());
     setReconnectDelay(args.value("reconnectDelay", reconnectDelay()).toInt());
     setSecure(args.value("secure", isSecure()).toBool());

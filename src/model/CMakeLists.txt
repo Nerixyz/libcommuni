@@ -46,11 +46,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     Qt${MAJOR_QT_VERSION}::Core
     Qt${MAJOR_QT_VERSION}::Network
     )
-if (BUILD_WITH_QT6)
-    target_link_libraries(${PROJECT_NAME} PUBLIC
-        Qt${MAJOR_QT_VERSION}::Core5Compat
-        )
-endif()
 target_include_directories(${PROJECT_NAME} PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcModel/" "${LibCommuni_INCLUDE_DIR}/IrcCore/")
 target_compile_definitions(${PROJECT_NAME} PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
 

@@ -246,8 +246,6 @@ IRC_BEGIN_NAMESPACE
     \brief The message is an implicit "reply" after joining a channel.
  */
 
-extern bool irc_is_supported_encoding(const QByteArray& encoding); // ircmessagedecoder.cpp
-
 static IrcMessage* irc_create_message(const QString& command, IrcConnection* connection)
 {
     typedef std::function<IrcMessage *(IrcConnection *)> IrcMessageFactory;
@@ -608,39 +606,6 @@ void IrcMessage::setTimeStamp(const QDateTime& timeStamp)
 }
 
 /*!
-    This property holds the FALLBACK encoding for the message.
-
-    The fallback encoding is used when the message is detected not
-    to be valid UTF-8 and the consequent auto-detection of message
-    encoding fails. See QTextCodec::availableCodes() for the list of
-    supported encodings.
-
-    The default value is ISO-8859-15.
-
-    \par Access functions:
-    \li QByteArray <b>encoding</b>() const
-    \li void <b>setEncoding</b>(const QByteArray& encoding)
-
-    \sa QTextCodec::availableCodecs(), QTextCodec::codecForLocale()
- */
-QByteArray IrcMessage::encoding() const
-{
-    Q_D(const IrcMessage);
-    return d->encoding;
-}
-
-void IrcMessage::setEncoding(const QByteArray& encoding)
-{
-    Q_D(IrcMessage);
-    if (!irc_is_supported_encoding(encoding)) {
-        qWarning() << "IrcMessage::setEncoding(): unsupported encoding" << encoding;
-        return;
-    }
-    d->encoding = encoding;
-    d->invalidate();
-}
-
-/*!
     \since 3.1
 
     This property holds the message tags.
@@ -739,7 +704,6 @@ IrcMessage* IrcMessage::clone(QObject* parent) const
         msg->setParent(parent);
         IrcMessagePrivate* p = IrcMessagePrivate::get(msg);
         p->timeStamp = d->timeStamp;
-        p->encoding = d->encoding;
         p->flags = d->flags;
         p->data = d->data;
         foreach (IrcMessage* bm, d->batch)
