@@ -13,10 +13,6 @@
 #include <QtTest/QtTest>
 #include <QtCore/QScopedPointer>
 
-#ifdef Q_OS_LINUX
-#include "ircmessagedecoder_p.h"
-#endif // Q_OS_LINUX
-
 class tst_IrcMessage : public QObject
 {
     Q_OBJECT
