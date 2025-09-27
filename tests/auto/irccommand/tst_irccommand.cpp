@@ -12,7 +12,6 @@
 #include "ircmessage.h"
 
 #include <QtCore/QScopedPointer>
-#include <QTextCodec>
 #include <QtTest/QtTest>
 
 
