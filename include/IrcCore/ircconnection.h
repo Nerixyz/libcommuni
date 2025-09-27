@@ -59,7 +59,6 @@ class IRC_CORE_EXPORT IrcConnection : public QObject
     Q_PROPERTY(QStringList nickNames READ nickNames WRITE setNickNames NOTIFY nickNamesChanged)
     Q_PROPERTY(QString displayName READ displayName WRITE setDisplayName NOTIFY displayNameChanged)
     Q_PROPERTY(QVariantMap userData READ userData WRITE setUserData NOTIFY userDataChanged)
-    Q_PROPERTY(QByteArray encoding READ encoding WRITE setEncoding)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
     Q_PROPERTY(bool active READ isActive NOTIFY statusChanged)
     Q_PROPERTY(bool connected READ isConnected NOTIFY statusChanged)
@@ -114,9 +113,6 @@ public:
 
     QVariantMap userData() const;
     void setUserData(const QVariantMap& data);
-
-    QByteArray encoding() const;
-    void setEncoding(const QByteArray& encoding);
 
     enum Status {
         Inactive,

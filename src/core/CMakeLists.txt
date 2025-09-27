@@ -36,7 +36,6 @@ set(PRIV_HEADERS
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircdebug_p.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircmessage_p.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircmessagecomposer_p.h
-        ${LibCommuni_INCLUDE_DIR}/IrcCore/ircmessagedecoder_p.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircnetwork_p.h
         )
 
@@ -49,10 +48,8 @@ set(SOURCE_FILES
         ${CMAKE_CURRENT_LIST_DIR}/ircmessage.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircmessage_p.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircmessagecomposer.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ircmessagedecoder.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircnetwork.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircprotocol.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ircmessagedecoder_none.cpp
         #${LibCommuni_SOURCE_DIR}/3rdparty/mozilla/rdf_utils.c
         )
 
@@ -67,11 +64,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     Qt${MAJOR_QT_VERSION}::Core
     Qt${MAJOR_QT_VERSION}::Network
     )
-if (BUILD_WITH_QT6)
-    target_link_libraries(${PROJECT_NAME} PUBLIC
-        Qt${MAJOR_QT_VERSION}::Core5Compat
-        )
-endif()
 target_include_directories(${PROJECT_NAME} PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcCore/")
 target_compile_definitions(${PROJECT_NAME} PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
 

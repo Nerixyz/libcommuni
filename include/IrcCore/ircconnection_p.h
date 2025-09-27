@@ -80,7 +80,6 @@ public:
     }
 
     IrcConnection* q_ptr = nullptr;
-    QByteArray encoding;
     IrcNetwork* network = nullptr;
     IrcProtocol* protocol = nullptr;
     QAbstractSocket* socket = nullptr;

@@ -791,7 +791,6 @@ Module {
             }
         }
         Property { name: "parameters"; type: "QStringList" }
-        Property { name: "encoding"; type: "QByteArray" }
         Property { name: "type"; type: "Type" }
         Method {
             name: "toMessage"
@@ -1222,7 +1221,6 @@ Module {
         Property { name: "realName"; type: "string" }
         Property { name: "password"; type: "string" }
         Property { name: "displayName"; type: "string" }
-        Property { name: "encoding"; type: "QByteArray" }
         Property { name: "status"; type: "Status"; isReadonly: true }
         Property { name: "active"; type: "bool"; isReadonly: true }
         Property { name: "connected"; type: "bool"; isReadonly: true }

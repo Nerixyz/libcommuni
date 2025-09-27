@@ -19,10 +19,6 @@ endif()
 
 find_package(Qt${MAJOR_QT_VERSION} REQUIRED COMPONENTS Core Network)
 
-if (BUILD_WITH_QT6)
-    find_package(Qt${MAJOR_QT_VERSION} REQUIRED COMPONENTS Core5Compat)
-endif()
-
 set(LibCommuni_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/")
 set(LibCommuni_SOURCE_DIR  "${CMAKE_CURRENT_LIST_DIR}/src/")
 

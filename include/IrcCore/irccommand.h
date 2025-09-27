@@ -47,7 +47,6 @@ class IRC_CORE_EXPORT IrcCommand : public QObject
     Q_PROPERTY(IrcConnection* connection READ connection)
     Q_PROPERTY(IrcNetwork* network READ network)
     Q_PROPERTY(QStringList parameters READ parameters WRITE setParameters)
-    Q_PROPERTY(QByteArray encoding READ encoding WRITE setEncoding)
     Q_PROPERTY(Type type READ type WRITE setType)
     Q_ENUMS(Type)
 
@@ -100,9 +99,6 @@ public:
 
     QStringList parameters() const;
     void setParameters(const QStringList& parameters);
-
-    QByteArray encoding() const;
-    void setEncoding(const QByteArray& encoding);
 
     virtual QString toString() const;
 

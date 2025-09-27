@@ -72,9 +72,6 @@ private slots:
     void testDisplayName_data();
     void testDisplayName();
 
-    void testEncoding_data();
-    void testEncoding();
-
     void testSocket_data();
     void testSocket();
 
@@ -123,7 +120,6 @@ void tst_IrcConnection::testDefaults()
     QVERIFY(connection.realName().isNull());
     QVERIFY(connection.password().isNull());
     QVERIFY(connection.displayName().isNull());
-    QCOMPARE(connection.encoding(), QByteArray("ISO-8859-15"));
     QCOMPARE(connection.status(), IrcConnection::Inactive);
     QVERIFY(!connection.isActive());
     QVERIFY(!connection.isConnected());
@@ -318,34 +314,6 @@ void tst_IrcConnection::testDisplayName()
     connection.setHost(host);
     connection.setDisplayName(name);
     QCOMPARE(connection.displayName(), result);
-}
-
-void tst_IrcConnection::testEncoding_data()
-{
-    QTest::addColumn<QByteArray>("encoding");
-    QTest::addColumn<QByteArray>("actual");
-    QTest::addColumn<bool>("supported");
-
-    QTest::newRow("null") << QByteArray() << QByteArray("ISO-8859-15") << false;
-    QTest::newRow("empty") << QByteArray("") << QByteArray("ISO-8859-15") << false;
-    QTest::newRow("space") << QByteArray(" ") << QByteArray("ISO-8859-15") << false;
-    QTest::newRow("invalid") << QByteArray("invalid") << QByteArray("ISO-8859-15") << false;
-    foreach (const QByteArray& codec, QTextCodec::availableCodecs())
-        QTest::newRow(codec) << codec << codec << true;
-}
-
-void tst_IrcConnection::testEncoding()
-{
-    QFETCH(QByteArray, encoding);
-    QFETCH(QByteArray, actual);
-    QFETCH(bool, supported);
-
-    if (!supported)
-        QTest::ignoreMessage(QtWarningMsg, "IrcConnection::setEncoding(): unsupported encoding \"" + encoding + "\" ");
-
-    IrcConnection connection;
-    connection.setEncoding(encoding);
-    QCOMPARE(connection.encoding(), actual);
 }
 
 Q_DECLARE_METATYPE(QAbstractSocket*)
@@ -2025,7 +1993,6 @@ void tst_IrcConnection::testClone()
     QCOMPARE(c2->nickNames(), QStringList() << "n1" << "n2" << "n3");
     QCOMPARE(c2->displayName(), QString("display"));
     QCOMPARE(c2->userData(), ud);
-    QCOMPARE(c2->encoding(), QByteArray("UTF-8"));
     QVERIFY(!c2->isEnabled());
     QCOMPARE(c2->reconnectDelay(), 10);
     QVERIFY(c2->isSecure());
@@ -2068,7 +2035,6 @@ void tst_IrcConnection::testSaveRestore()
     QCOMPARE(c2.nickNames(), QStringList() << "n1" << "n2" << "n3");
     QCOMPARE(c2.displayName(), QString("display"));
     QCOMPARE(c2.userData(), ud);
-    QCOMPARE(c2.encoding(), QByteArray("UTF-8"));
     QVERIFY(!c2.isEnabled());
     QCOMPARE(c2.reconnectDelay(), 10);
     QVERIFY(c2.isSecure());
