@@ -41,7 +41,7 @@ QString IrcMessagePrivate::prefix() const
     if (!m_prefix.isExplicit() && m_prefix.isNull() && !data.prefix.isNull()) {
         if (data.prefix.startsWith(':')) {
             if (data.prefix.length() > 1)
-                m_prefix = QString::fromUtf8(QByteArrayView(data.prefix).mid(1));
+                m_prefix = QString::fromUtf8(QByteArrayView(data.prefix).sliced(1));
         } else {
             // empty (not null)
             m_prefix = QString("");
