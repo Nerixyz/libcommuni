@@ -1,5 +1,9 @@
 name: CI
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [master, chatterino-cmake]
@@ -14,8 +18,9 @@ jobs:
     strategy:
       matrix:
         config: [shared, static]
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-14, windows-latest]
         qt-version: [6.7.*]
+      fail-fast: false
 
     steps:
     - name: Install Qt
@@ -28,7 +33,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Enable Developer Command Prompt
-      uses: Chatterino/msvc-dev-cmd@v2
+      uses: Chatterino/msvc-dev-cmd@v2.0.5
       if: matrix.os == 'windows-latest'
 
     - name: Build
