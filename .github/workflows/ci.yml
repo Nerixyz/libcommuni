@@ -33,7 +33,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -B build -G ${{ case(runner.os == 'Windows', 'Ninja', 'Make') }} -DCMAKE_BUILD_TYPE=Debug
+        cmake -B build -G "${{ case(runner.os == 'Windows', 'Ninja', 'Unix Makefiles') }}" -DCMAKE_BUILD_TYPE=Debug
         cmake --build build --parallel
 
     - name: Run Tests
