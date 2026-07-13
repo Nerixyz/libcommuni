@@ -43,7 +43,7 @@ protected:
 
     QPointer<QTcpServer> server;
     QPointer<QTcpSocket> serverSocket;
-    QPointer<IrcConnection> connection;
+    QPointer<IRC_PREPEND_NAMESPACE(IrcConnection)> connection;
     QPointer<QAbstractSocket> clientSocket;
 };
 

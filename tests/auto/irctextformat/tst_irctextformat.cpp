@@ -12,6 +12,8 @@
 #include "ircpalette.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcTextFormat : public QObject
 {
     Q_OBJECT

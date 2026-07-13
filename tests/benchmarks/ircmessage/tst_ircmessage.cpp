@@ -11,6 +11,8 @@
 #include "ircconnection.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 static const QByteArray MSG_32_5("Vestibulum eu libero eget metus.");
 static const QByteArray MSG_64_9("Phasellus enim dui, sodales sed tincidunt quis, ultricies metus.");
 static const QByteArray MSG_128_19("Ut porttitor volutpat tristique. Aenean semper ligula eget nulla condimentum tempor in quis felis. Sed sem diam, tincidunt amet.");

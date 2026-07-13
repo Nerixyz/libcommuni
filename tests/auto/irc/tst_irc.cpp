@@ -13,6 +13,8 @@
 #include "ircutil.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_Irc : public QObject
 {
     Q_OBJECT

@@ -22,6 +22,8 @@
 #include "tst_ircdata.h"
 #include "tst_ircclientserver.h"
 
+IRC_USE_NAMESPACE
+
 class FriendlyConnection : public IrcConnection
 {
     friend class tst_IrcConnection;

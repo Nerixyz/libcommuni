@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 static bool caseInsensitiveLessThan(const QString& s1, const QString& s2)
 {
     return s1.compare(s2, Qt::CaseInsensitive) < 0;

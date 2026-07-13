@@ -33,23 +33,11 @@ jobs:
 
     - name: Build
       run: |
-        qmake -v
-        ./configure -verbose -config ${{matrix.config}}
-        make -j2
-      if: matrix.os != 'windows-latest'
-
-    - name: Build
-      run: |
-        qmake -v
-        qmake -config verbose -config ${{matrix.config}}
-        set CL=/MP
-        nmake
-      shell: cmd
-      if: matrix.os == 'windows-latest'
+        cmake -B build -G ${{ case(runner.os == 'Windows', 'Ninja', 'Make') }} -DCMAKE_BUILD_TYPE=Debug
+        cmake --build build --parallel
 
     - name: Run Tests
-      run: make check
-      if: matrix.os == 'ubuntu-latest'
+      run: ctest --output-on-failure
 
   coverage:
     name: Coverage
