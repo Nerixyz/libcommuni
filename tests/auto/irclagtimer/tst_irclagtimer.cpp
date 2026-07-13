@@ -13,6 +13,8 @@
 #include "tst_ircdata.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcLagTimer : public tst_IrcClientServer
 {
     Q_OBJECT

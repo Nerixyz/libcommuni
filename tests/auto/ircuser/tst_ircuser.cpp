@@ -13,6 +13,8 @@
 #include "ircuser_p.h"
 #endif // Q_OS_LINUX
 
+IRC_USE_NAMESPACE
+
 class tst_IrcUser : public QObject
 {
     Q_OBJECT

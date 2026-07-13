@@ -15,6 +15,8 @@
 #include "ircfilter.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcBuffer : public QObject
 {
     Q_OBJECT

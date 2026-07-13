@@ -10,6 +10,8 @@
 #include "ircchannel.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcChannel : public QObject
 {
     Q_OBJECT

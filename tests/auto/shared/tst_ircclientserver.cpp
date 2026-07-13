@@ -9,6 +9,8 @@
 
 #include "tst_ircclientserver.h"
 
+IRC_USE_NAMESPACE
+
 tst_IrcClientServer::tst_IrcClientServer()
 {
     server = new QTcpServer(this);

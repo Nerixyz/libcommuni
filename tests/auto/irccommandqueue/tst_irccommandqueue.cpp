@@ -16,6 +16,8 @@
 #include "tst_ircclientserver.h"
 #include "tst_ircdata.h"
 
+IRC_USE_NAMESPACE
+
 class tst_IrcCommandQueue : public tst_IrcClientServer
 {
     Q_OBJECT

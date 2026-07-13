@@ -10,6 +10,8 @@
 #include "irccommandparser.h"
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcCommandParser : public QObject
 {
     Q_OBJECT

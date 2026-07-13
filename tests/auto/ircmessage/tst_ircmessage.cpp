@@ -13,6 +13,8 @@
 #include <QtTest/QtTest>
 #include <QtCore/QScopedPointer>
 
+IRC_USE_NAMESPACE
+
 class tst_IrcMessage : public QObject
 {
     Q_OBJECT

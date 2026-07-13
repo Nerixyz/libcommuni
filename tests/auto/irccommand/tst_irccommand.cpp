@@ -14,6 +14,7 @@
 #include <QtCore/QScopedPointer>
 #include <QtTest/QtTest>
 
+IRC_USE_NAMESPACE
 
 class tst_IrcCommand : public QObject
 {

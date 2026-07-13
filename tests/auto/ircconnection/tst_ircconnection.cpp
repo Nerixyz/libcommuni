@@ -22,6 +22,8 @@
 #include "tst_ircdata.h"
 #include "tst_ircclientserver.h"
 
+IRC_USE_NAMESPACE
+
 class FriendlyConnection : public IrcConnection
 {
     friend class tst_IrcConnection;
@@ -1463,17 +1465,19 @@ public:
     bool messageFilter(IrcMessage*) override
     {
         ++messageFiltered;
+        bool enabled = messageFilterEnabled;
         if (commitSuicide)
             delete this;
-        return messageFilterEnabled;
+        return enabled;
     }
 
     bool commandFilter(IrcCommand*) override
     {
         ++commandFiltered;
+        bool enabled = commandFilterEnabled;
         if (commitSuicide)
             delete this;
-        return commandFilterEnabled;
+        return enabled;
     }
 
     bool commitSuicide;
