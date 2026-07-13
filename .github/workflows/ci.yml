@@ -33,7 +33,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Enable Developer Command Prompt
-      uses: Chatterino/msvc-dev-cmd@v2
+      uses: Chatterino/msvc-dev-cmd@v2.0.5
       if: matrix.os == 'windows-latest'
 
     - name: Build
