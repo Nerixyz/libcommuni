@@ -16,6 +16,7 @@ set(CONV_HEADERS
         ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcMessageFilter
         ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcNetwork
         ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcProtocol
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcTagsRef
         )
 
 set(PUB_HEADERS
@@ -28,6 +29,7 @@ set(PUB_HEADERS
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircmessage.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircnetwork.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/ircprotocol.h
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/irctagsref.h
         )
 
 set(PRIV_HEADERS
@@ -50,6 +52,7 @@ set(SOURCE_FILES
         ${CMAKE_CURRENT_LIST_DIR}/ircmessagecomposer.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircnetwork.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ircprotocol.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/irctagsref.cpp
         #${LibCommuni_SOURCE_DIR}/3rdparty/mozilla/rdf_utils.c
         )
 

@@ -29,6 +29,7 @@
 #ifndef IRCMESSAGE_P_H
 #define IRCMESSAGE_P_H
 
+#include <IrcTagsRef>
 #include <QtCore/qmap.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qstring.h>
@@ -54,6 +55,12 @@ public:
 
     const T& value() const { return v; }
     void setValue(const T& value) { v = value; exp = true; null = false; }
+
+    T &mutate() {
+      exp = true;
+      null = false;
+      return v;
+    }
 
     void clear() { v = T(); exp = false; null = true; }
 
@@ -99,8 +106,10 @@ public:
     QString param(int index) const;
     void setParams(const QStringList& params);
 
-    QVariantMap tags() const;
+    TagsRef tags() const IRC_LIFETIMEBOUND;
     void setTags(const QVariantMap& tags);
+
+    void insertTag(const QString &name, const QString &value);
 
     QByteArray content() const;
 

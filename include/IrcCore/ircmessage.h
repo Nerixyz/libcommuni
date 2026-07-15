@@ -31,6 +31,7 @@
 
 #include <Irc>
 #include <IrcGlobal>
+#include <IrcTagsRef>
 #include <QtCore/qobject.h>
 #include <QtCore/qvariant.h>
 #include <QtCore/qmetatype.h>
@@ -62,7 +63,6 @@ class IRC_CORE_EXPORT IrcMessage : public QObject
     Q_PROPERTY(QString account READ account)
     Q_PROPERTY(QStringList parameters READ parameters WRITE setParameters)
     Q_PROPERTY(QDateTime timeStamp READ timeStamp WRITE setTimeStamp)
-    Q_PROPERTY(QVariantMap tags READ tags WRITE setTags)
     Q_ENUMS(Type Flag)
     Q_FLAGS(Flags)
 
@@ -144,11 +144,11 @@ public:
     QDateTime timeStamp() const;
     void setTimeStamp(const QDateTime& timeStamp);
 
-    QVariantMap tags() const;
+    TagsRef tags() const IRC_LIFETIMEBOUND;
     void setTags(const QVariantMap& tags);
 
     QVariant tag(const QString& name) const;
-    void setTag(const QString& name, const QVariant& tag);
+    void setTag(const QString& name, const QString& value);
 
     Q_INVOKABLE QByteArray toData() const;
     Q_INVOKABLE static IrcMessage* fromData(const QByteArray& data, IrcConnection* connection);

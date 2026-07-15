@@ -222,23 +222,38 @@ void tst_IrcMessage::testTags()
 
     IrcConnection connection;
     IrcMessage* message = IrcMessage::fromData("@aaa=bbb;ccc;example.com/ddd=eee :nick!ident@host.com PRIVMSG me :Hello", &connection);
-    QCOMPARE(message->tags(), tags);
+    QCOMPARE(message->tags().raw(), tags);
+
+    QVERIFY(message->tags().has("aaa"));
+    QCOMPARE(message->tags().get("aaa"), "bbb");
+    QCOMPARE(message->tags().getOr("aaa", "foo"), "bbb");
+    QCOMPARE(message->tags().getOrEmpty("aaa"), "bbb");
+
+    QVERIFY(message->tags().has("ccc"));
+    QCOMPARE(message->tags().get("ccc"), "");
+    QCOMPARE(message->tags().getOr("ccc", "foo"), "");
+    QCOMPARE(message->tags().getOrEmpty("ccc"), "");
+
+    QVERIFY(!message->tags().has("ddd"));
+    QCOMPARE(message->tags().get("ddd"), std::nullopt);
+    QCOMPARE(message->tags().getOr("ddd", "foo"), "foo");
+    QCOMPARE(message->tags().getOrEmpty("ddd"), "");
 
     tags.insert(QStringLiteral("ccc"), "xyz");
     message->setTag(QStringLiteral("ccc"), "xyz");
 
-    QCOMPARE(message->tags(), tags);
+    QCOMPARE(message->tags().raw(), tags);
     QCOMPARE(message->toData(), QByteArray("@aaa=bbb;ccc=xyz;example.com/ddd=eee :nick!ident@host.com PRIVMSG me Hello"));
 
     tags.insert(QStringLiteral("fff"), "ggg");
     message->setTag(QStringLiteral("fff"), "ggg");
-    QCOMPARE(message->tags(), tags);
+    QCOMPARE(message->tags().raw(), tags);
     QCOMPARE(message->toData(), QByteArray("@aaa=bbb;ccc=xyz;example.com/ddd=eee;fff=ggg :nick!ident@host.com PRIVMSG me Hello"));
 
     tags.clear();
     tags.insert(QStringLiteral("foo"), "bar");
     message->setTags(tags);
-    QCOMPARE(message->tags(), tags);
+    QCOMPARE(message->tags().raw(), tags);
     QCOMPARE(message->toData(), QByteArray("@foo=bar :nick!ident@host.com PRIVMSG me Hello"));
 }
 
@@ -1061,7 +1076,7 @@ void tst_IrcMessage::testClone()
     QCOMPARE(clone->connection(), &connection);
     QCOMPARE(clone->type(), pm->type());
     QCOMPARE(clone->flags(), pm->flags());
-    QCOMPARE(clone->tags(), pm->tags());
+    QCOMPARE(clone->tags().raw(), pm->tags().raw());
     QCOMPARE(clone->prefix(), pm->prefix());
     QCOMPARE(clone->nick(), pm->nick());
     QCOMPARE(clone->ident(), pm->ident());

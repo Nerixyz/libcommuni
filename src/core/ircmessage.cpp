@@ -533,7 +533,7 @@ QString IrcMessage::host() const
 QString IrcMessage::account() const
 {
     Q_D(const IrcMessage);
-    return d->tags().value(QStringLiteral("account")).toString();
+    return d->tags().getOrEmpty(QStringLiteral("account"));
 }
 
 /*!
@@ -611,12 +611,12 @@ void IrcMessage::setTimeStamp(const QDateTime& timeStamp)
     This property holds the message tags.
 
     \par Access functions:
-    \li QVariantMap <b>tags</b>() const
+    \li TagsRef <b>tags</b>() const
     \li void <b>setTags</b>(const QVariantMap& tags)
 
     \sa \ref ircv3
  */
-QVariantMap IrcMessage::tags() const
+TagsRef IrcMessage::tags() const
 {
     Q_D(const IrcMessage);
     return d->tags();
@@ -638,7 +638,7 @@ void IrcMessage::setTags(const QVariantMap& tags)
 QVariant IrcMessage::tag(const QString& name) const
 {
     Q_D(const IrcMessage);
-    return d->tags().value(name);
+    return d->tags().getOrEmpty(name);
 }
 
 /*!
@@ -648,12 +648,10 @@ QVariant IrcMessage::tag(const QString& name) const
 
     \sa \ref ircv3
  */
-void IrcMessage::setTag(const QString& name, const QVariant& value)
+void IrcMessage::setTag(const QString& name, const QString& value)
 {
     Q_D(IrcMessage);
-    QVariantMap tags = d->tags();
-    tags.insert(name, value);
-    d->setTags(tags);
+    d->insertTag(name, value);
 }
 
 /*!
