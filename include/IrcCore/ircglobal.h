@@ -114,4 +114,15 @@
 
 #endif // IRC_NAMESPACE
 
+#if __has_cpp_attribute(gsl::Pointer)
+#define IRC_GSL_POINTER [[gsl::Pointer]]
+#else
+#define IRC_GSL_POINTER
+#endif
+#if __has_cpp_attribute(clang::lifetimebound)
+#define IRC_LIFETIMEBOUND [[clang::lifetimebound]]
+#else
+#define IRC_LIFETIMEBOUND
+#endif
+
 #endif // IRCGLOBAL_H

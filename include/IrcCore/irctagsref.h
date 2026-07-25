@@ -34,17 +34,6 @@
 
 IRC_BEGIN_NAMESPACE
 
-#if __has_cpp_attribute(gsl::Pointer)
-#define IRC_GSL_POINTER [[gsl::Pointer]]
-#else
-#define IRC_GSL_POINTER
-#endif
-#if __has_cpp_attribute(clang::lifetimebound)
-#define IRC_LIFETIMEBOUND [[clang::lifetimebound]]
-#else
-#define IRC_LIFETIMEBOUND
-#endif
-
 /// A reference/view type for tags of an IRC message.
 ///
 /// This should be passed by value, similar to a string view.
