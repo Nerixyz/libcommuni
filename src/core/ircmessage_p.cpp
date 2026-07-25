@@ -112,7 +112,7 @@ void IrcMessagePrivate::setParams(const QStringList& params)
     m_params.setValue(params);
 }
 
-QVariantMap IrcMessagePrivate::tags() const
+TagsRef IrcMessagePrivate::tags() const
 {
     if (!m_tags.isExplicit() && m_tags.isNull() && !data.tags.isEmpty()) {
         QVariantMap tags;
@@ -121,12 +121,17 @@ QVariantMap IrcMessagePrivate::tags() const
             tags.insert(QString::fromUtf8(it.key()), QString::fromUtf8(it.value()));
         m_tags = tags;
     }
-    return m_tags.value();
+    return TagsRef(m_tags.value());
 }
 
 void IrcMessagePrivate::setTags(const QVariantMap& tags)
 {
     m_tags.setValue(tags);
+}
+
+void IrcMessagePrivate::insertTag(const QString& name, const QString &value)
+{
+    m_tags.mutate().insert(name, value);
 }
 
 QByteArray IrcMessagePrivate::content() const
@@ -136,9 +141,9 @@ QByteArray IrcMessagePrivate::content() const
 
         // format <tags>
         QStringList tt;
-        const QVariantMap t = tags();
-        for (QVariantMap::const_iterator it = t.begin(); it != t.end(); ++it)
-            tt += it.key() + QLatin1Char('=') + it.value().toString();
+        const auto t = tags();
+        for (const auto &[key, value] : t.raw().asKeyValueRange())
+            tt += key + QLatin1Char('=') + value.toString();
         if (!tt.isEmpty())
             data += '@' + tt.join(QLatin1String(";")).toUtf8() + ' ';
 

@@ -169,7 +169,7 @@ void IrcProtocolPrivate::processLine(const QByteArray& line)
 
 bool IrcProtocolPrivate::batchMessage(IrcMessage* msg)
 {
-    QString tag = msg->tags().value("batch").toString();
+    QString tag = msg->tags().getOrEmpty("batch");
     IrcBatchMessage* batch = batches.value(tag);
     if (batch) {
         msg->setParent(batch);

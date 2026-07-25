@@ -19,6 +19,7 @@ CONV_HEADERS += $$INCDIR/IrcMessage
 CONV_HEADERS += $$INCDIR/IrcMessageFilter
 CONV_HEADERS += $$INCDIR/IrcNetwork
 CONV_HEADERS += $$INCDIR/IrcProtocol
+CONV_HEADERS += $$INCDIR/IrcTagsRef
 
 PUB_HEADERS  = $$INCDIR/irc.h
 PUB_HEADERS += $$INCDIR/irccommand.h
@@ -29,6 +30,7 @@ PUB_HEADERS += $$INCDIR/ircglobal.h
 PUB_HEADERS += $$INCDIR/ircmessage.h
 PUB_HEADERS += $$INCDIR/ircnetwork.h
 PUB_HEADERS += $$INCDIR/ircprotocol.h
+PUB_HEADERS += $$INCDIR/irctagsref.h
 
 PRIV_HEADERS  = $$INCDIR/irccommand_p.h
 PRIV_HEADERS += $$INCDIR/ircconnection_p.h
@@ -51,3 +53,4 @@ SOURCES += $$PWD/ircmessage_p.cpp
 SOURCES += $$PWD/ircmessagecomposer.cpp
 SOURCES += $$PWD/ircnetwork.cpp
 SOURCES += $$PWD/ircprotocol.cpp
+SOURCES += $$PWD/irctagsref.cpp
